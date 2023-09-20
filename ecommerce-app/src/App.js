@@ -29,9 +29,6 @@ function App() {
         setProductDatas(json);
       });
   }, []);
-  window.onload = function() {
-    window.location.path = '/';
-};
 
   const selectProduct = (index) => {
     setAddProduct([...addProduct, selectCrd[index]]);
