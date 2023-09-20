@@ -1,9 +1,10 @@
 import React from 'react'
 import './Header.css'
+import { Link } from "react-router-dom";
 function Header() {
   return (
 <React.Fragment>
-    <div style={{background:'red'}}>
+    <div className='headerParent'>
     <div className='HeaderMainContainer'>
     <div>Logo</div>
     <div className='navCenter'>
@@ -12,7 +13,11 @@ function Header() {
     <div>condition</div>
     <div>vasp</div>
     </div>
-    <div><button>LOOBE</button></div>
+    <div>
+    <Link to="Dashboard">
+      <button>LOOBE</button>
+      </Link>
+      </div>
     </div>
     </div>
 </React.Fragment>
