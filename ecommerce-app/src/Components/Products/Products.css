@@ -1,0 +1,23 @@
+
+.products{
+    margin: 0.5rem 0;
+     display: flex;
+     justify-content: space-between;
+     padding: 0.5rem;
+}
+.productsHeader{
+    font-weight: 500;
+    font-size: 1.5rem;
+
+}
+.productsMain{
+display: flex;
+ justify-content: space-between;
+ padding: 0.5rem;
+  background: rgba(129, 86, 86, 0.507);
+}
+img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
