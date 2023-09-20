@@ -1,0 +1,10 @@
+.filterConatiner{
+    display: flex;
+    gap:4%;
+    margin-top: 0.5rem;
+}
+.filterContainSelectBox{
+    display: flex;
+    gap: 0.5rem;
+  
+}
