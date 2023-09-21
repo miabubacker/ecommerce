@@ -5,6 +5,9 @@
      justify-content: space-between;
      padding: 0.5rem;
 }
+a{
+     text-decoration: none;
+}
 .productsHeader{
     font-weight: 500;
     font-size: 1.5rem;

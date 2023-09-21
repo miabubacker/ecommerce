@@ -14,7 +14,7 @@ function App() {
   const [productDatas, setProductDatas] = useState({});
   const [cellData, setCellData] = useState([]);
   const [copydata, setCopydata] = useState({});
-  const [addProduct, setAddProduct] = useState([]);
+  const [addProduct, setAddProduct] = useState();
   const [selectCrd, setSelectCrd] = useState();
   const [priceFormat, setPriceFormat] = useState("");
   const [defaultRange, setDefaultRange] = useState();
@@ -31,7 +31,8 @@ function App() {
   }, []);
 
   const selectProduct = (index) => {
-    setAddProduct([...addProduct, selectCrd[index]]);
+    let ds=addProduct?[...addProduct]:[]
+ setAddProduct( [...ds, selectCrd[index]]);
   };
 
   const sortPrice = (selectedFormat) => {
@@ -40,12 +41,12 @@ function App() {
   useEffect(() => {
     let dss = [];
     if (priceFormat === "low-to-high") {
-      const vs = [...selectCrd];
+      const vs = [...selectCrd||[]];
       dss = [...(vs || [])].sort((a, b) => a.price - b.price);
       setSelectCrd(dss);
     }
     if (priceFormat === "high-to-low") {
-      const vs = [...selectCrd];
+      const vs = [...selectCrd||[]];
       dss = [...(vs || [])].sort((a, b) => b.price - a.price);
       setSelectCrd(dss);
     }
@@ -57,7 +58,7 @@ function App() {
 
   return (
     <>
-      <Header productDatas={productDatas} cellData={cellData} />
+      <Header productDatas={productDatas} cellData={cellData} addProduct={addProduct} />
       <Filter />
       <Routes>
         <Route

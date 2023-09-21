@@ -15,7 +15,7 @@ export default function Products(props) {
             </option>
           ))}</select></div>
    </div>
-   <div style={{display:"flex",justifyContent:"space-between",flexDirection:"column",gap:'1rem'}}>{[...selectCrd||[]].map(({title,category,thumbnail,price,rating,stock,description,brand,discountPercentage,id},index)=><div className='productsMain'>
+   <div style={{display:"flex",justifyContent:"space-between",flexDirection:"column",gap:'1rem'}}>{!selectCrd ?<div>noProducts</div>:selectCrd.map(({title,category,thumbnail,price,rating,stock,description,brand,discountPercentage,id},index)=><div className='productsMain'>
    <div style={{display:"flex",flexDirection:"column",justifyContent:'space-between'}}>
     <div><div>{title}</div>
    <div>{brand}</div>

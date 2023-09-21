@@ -1,7 +1,8 @@
 import React from 'react'
 import './Header.css'
 import { Link } from "react-router-dom";
-function Header() {
+function Header(props) {
+   const{addProduct}=props
   return (
 <React.Fragment>
     <div className='headerParent'>
@@ -15,7 +16,10 @@ function Header() {
     </div>
     <div>
     <Link to="Dashboard">
-      <button>LOOBE</button>
+      <div style={{display:"flex",gap:'1.5rem',alignItems:"center"}}>
+      <div className='dashboardCount'>{addProduct&&addProduct.length}</div>
+      <button>Cart</button>
+      </div>
       </Link>
       </div>
     </div>
