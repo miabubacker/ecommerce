@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import './Products.css'
 import StarRate from './StarRate/StarRate'
 export default function Products(props) {
-    const {selectCrd,addProduct,setAddProduct,selectProduct,priceFormat,setPriceFormat,sortPrice}=props
+    const {selectCrd,addProduct,setAddProduct,selectProduct,priceFormat,setPriceFormat,sortPrice,searchInput}=props
   const sortByvalue=['low-to-high','high-to-low']
-
   return (
     <React.Fragment>
    <div className='products'>
 <div className='productsHeader'>Products</div>
-   <div>Sortby <select onChange={(e)=>{sortPrice(e.target.value)}}><option value="regular">Regular</option>{sortByvalue.map((option,index) => (
+   <div>Sortby <select onChange={(e)=>{sortPrice(e.target.value)}}  disabled={searchInput.length>0}><option value="regular">Regular</option>{sortByvalue.map((option,index) => (
             <option key={option} value={option}>
               {option}
             </option>

@@ -8,17 +8,17 @@ import Products from "./Components/Products/Products";
 import Filter from "./Components/Filter/Filter";
 import DashBoard from "./Components/DashBoard/DashBoard";
 
-
-
 function App() {
-  const [productDatas, setProductDatas] = useState({});
+  const [productDatas, setProductDatas] = useState([]);
   const [cellData, setCellData] = useState([]);
   const [copydata, setCopydata] = useState({});
   const [addProduct, setAddProduct] = useState();
   const [selectCrd, setSelectCrd] = useState();
   const [priceFormat, setPriceFormat] = useState("");
   const [defaultRange, setDefaultRange] = useState();
-
+  const [searchInput, setSearchInput] = useState("");
+  const [prod, setprod] = useState();
+   const[copyrange,setCopyrange]=useState()
 
   useEffect(() => {
     fetch("https://dummyjson.com/products/")
@@ -26,13 +26,13 @@ function App() {
       .then((json) => {
         let vs = json.products;
         setCellData(vs);
-        setProductDatas(json);
+        setProductDatas(vs);
       });
   }, []);
 
   const selectProduct = (index) => {
-    let ds=addProduct?[...addProduct]:[]
- setAddProduct( [...ds, selectCrd[index]]);
+    let ds = addProduct ? [...addProduct] : [];
+    setAddProduct([...ds, selectCrd[index]]);
   };
 
   const sortPrice = (selectedFormat) => {
@@ -41,25 +41,71 @@ function App() {
   useEffect(() => {
     let dss = [];
     if (priceFormat === "low-to-high") {
-      const vs = [...selectCrd||[]];
+      const vs = [...(selectCrd || [])];
       dss = [...(vs || [])].sort((a, b) => a.price - b.price);
       setSelectCrd(dss);
+      setCopyrange(dss)
     }
     if (priceFormat === "high-to-low") {
-      const vs = [...selectCrd||[]];
+      const vs = [...(selectCrd || [])];
       dss = [...(vs || [])].sort((a, b) => b.price - a.price);
       setSelectCrd(dss);
+      setCopyrange(dss)
     }
 
     if (priceFormat === "regular") {
       setSelectCrd(defaultRange);
+       setCopyrange(defaultRange)
     }
   }, [priceFormat]);
+  const searchBox = (value) => {
+    setSearchInput(value);
+  };
+  useEffect(() => {
+    const serach = searchInput.toLowerCase();
+     const copyslect=selectCrd&&[...selectCrd]
+    if (serach.length > 0) {
+      const searchList = [...productDatas].filter((item) => {
+        return (
+          item.title.toLowerCase().indexOf(serach) !== -1 ||
+          item.category.toLowerCase().indexOf(serach) !== -1
+        );
+      });
+      const slectedsearch =selectCrd &&
+        [...selectCrd].filter((item) => {
+          return (
+            item.title.toLowerCase().indexOf(serach) !== -1 ||
+            item.category.toLowerCase().indexOf(serach) !== -1
+          );
+        });
 
+      setCellData(searchList);
+      setprod(searchList);
+      setSelectCrd(slectedsearch);
+    } else {
+      setCellData(productDatas);
+      setprod();
+      copyrange?setSelectCrd(copyrange):setSelectCrd(defaultRange)
+
+    }
+  }, [searchInput]);
+   console.log(selectCrd)
+    console.log(copyrange)
   return (
     <>
-      <Header productDatas={productDatas} cellData={cellData} addProduct={addProduct} />
-      <Filter />
+      <Header
+        productDatas={productDatas}
+        cellData={cellData}
+        addProduct={addProduct}
+        searchBox={searchBox}
+      />
+      <Filter
+        productDatas={productDatas}
+        cellData={cellData}
+        addProduct={addProduct}
+        searchBox={searchBox}
+        setSearchInput={setSearchInput}
+      />
       <Routes>
         <Route
           path="/"
@@ -70,11 +116,13 @@ function App() {
               setSelectCrd={setSelectCrd}
               selectCrd={selectCrd}
               setDefaultRange={setDefaultRange}
+              prod={prod}
+              selectProduct={selectProduct}
             />
           }
         />
         <Route
-          path="Products"
+          path="/Products"
           element={
             <Products
               selectCrd={selectCrd}
@@ -84,6 +132,7 @@ function App() {
               priceFormat={priceFormat}
               setPriceFormat={setPriceFormat}
               sortPrice={sortPrice}
+              searchInput={searchInput}
             />
           }
         />
